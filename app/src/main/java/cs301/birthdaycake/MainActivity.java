@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         candleAmount.setOnSeekBarChangeListener(cakeController);
 
+        mCakeView.setOnTouchListener(cakeController);
     }
 
     public void goodbye(View button) {
