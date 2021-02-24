@@ -5,9 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
 
 public class CakeView extends SurfaceView {
 
@@ -18,6 +16,7 @@ public class CakeView extends SurfaceView {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
+    Paint text = new Paint();
     Paint balloon = new Paint();
     Paint string = new Paint();
 
@@ -68,6 +67,8 @@ public class CakeView extends SurfaceView {
         balloon.setStyle(Paint.Style.FILL);
         string.setColor(Color.BLACK);
         balloon.setStyle(Paint.Style.FILL);
+        text.setColor(Color.RED); //red
+        text.setTextSize(30);
 
         setBackgroundColor(Color.WHITE);  //better than black default
 
@@ -101,11 +102,6 @@ public class CakeView extends SurfaceView {
             canvas.drawRect(wickLeft, wickTop, wickLeft + wickWidth, wickTop + wickHeight, wickPaint);
         }
 
-    }
-
-    public void drawBalloon(Canvas canvas, float cx, float cy){
-        canvas.drawLine(cx + 50f, cy + 75f, cx + 50f, cy + 200f, string);
-        canvas.drawOval(cx, cy, cx + 100f,  cy + 150f, balloon);
     }
 
     /**
@@ -149,11 +145,20 @@ public class CakeView extends SurfaceView {
             multiple+=2;
         }
 
-        if(model.touch == true) {
+        if(model.touch) {
+            drawText(canvas, model.cx, model.cy);
             drawBalloon(canvas, model.cx, model.cy);
         }
     }//onDraw
 
+    public void drawText(Canvas canvas, float x, float y){
+        canvas.drawText("(" + String.valueOf(x + 50f) + ", " + String.valueOf(y + 75f) + ")", cakeWidth+150.0f, 470.0f, text);
+    }
+
+    public void drawBalloon(Canvas canvas, float cx, float cy){
+        canvas.drawLine(cx + 50f, cy + 75f, cx + 50f, cy + 200f, string);
+        canvas.drawOval(cx, cy, cx + 100f,  cy + 150f, balloon);
+    }
 
     public CakeModel getCakeModel(){
         return model;
